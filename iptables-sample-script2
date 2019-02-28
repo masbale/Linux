@@ -1,0 +1,26 @@
+
+#!/bin/bash
+
+echo "IpTables Script"
+read -p 'WAA or UMA Address : ' srcaddr
+read -p 'Console Address :' ipaddr
+read -p 'INPUT [INPUT]/ OUTPUT [OUTPUT] : ' chain
+read -p 'IP Port  :' ipport
+read -p 'Accept [A]/ Drop [D] :' dropaccept
+
+if [ "$dropaccept" = "A" ]; then
+        dropaccept="ACCEPT"
+elif [ "$dropaccept"= "D" ]; then
+        dropaccept="DROP"
+fi
+
+
+read -p 'Protocol TCP [tcp]/ UDP [udp] :' proto
+
+
+
+echo " Memproses ....."
+
+iptables -I $chain -s $srcaddr -d $ipaddr -p $proto --dport $ipport -j $dropaccept
+
+iptables -L
